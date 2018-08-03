@@ -14,7 +14,7 @@ function updateCards() {
 };
 
 showingCard = false;
-dealingCards = []
+var dealingCards = []
 matchedCard = 0;
 stars = 3;
 numOfMoves = 0;
@@ -53,46 +53,54 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-function onRestart() {
-
-
-}
-
 function displayCard(card) {
 	if (!card.hasClass("open")) {
 		card.toggleClass("open");
 		card.toggleClass("show");
-		showingCard = !showingCard;
 		dealingCards.push(card);
 	}
 }
 
-function hideCard(card) {
+
+function notMatchedCard(card) {
 	dealingCards.forEach(function(card) {
 		card.toggleClass("open");
 		card.toggleClass("show");
 	});
+
     dealingCards = [];
 }
 
 function matchedCard(card) {
 
+    dealingCards.forEach(function(card) {
+        card.addClass("match");
+    });
+
 
 }
-
 
 function displayAndMatch(card) {
 	displayCard(card)
-
+	showingCard = false;
 	//also check here if game is finshed
 	if (dealingCards[0].children().attr("class")===dealingCards[1].children().attr("class")) {
-
+		setTimeout(matchedCard, 100);
+		dealingCards = [];
 	}
 	else {
-		setTimeout(hideCard, 700);
+		setTimeout(notMatchedCard, 300);
 	}
 }
 
+function checkWon(){
+
+}
+
+function onRestart() {
+
+
+}
 
 $( ".card" ).click(function() {
 
@@ -104,8 +112,8 @@ $( ".card" ).click(function() {
 			displayAndMatch( $(this) )
 
 		}
-
 		else {
+			showingCard = true;
 			displayCard( $(this) )
 
 		}
