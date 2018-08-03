@@ -1,7 +1,23 @@
 /*
  * Create a list that holds all of your cards
  */
+var deck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
+// Randomizes cards on board and updates card HTML
+function updateCards() {
+    deck = shuffle(deck);
+    var index = 0;
+    $.each($(".card i"), function(){
+      $(this).attr("class", "fa " + deck[index]);
+      index++;
+    });
+};
+
+showingCard = false;
+dealingCards = []
+matchedCard = 0;
+stars = 3;
+numOfMoves = 0;
 
 /*
  * Display the cards on the page
@@ -36,3 +52,64 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+function onRestart() {
+
+
+}
+
+function displayCard(card) {
+	if (!card.hasClass("open")) {
+		card.toggleClass("open");
+		card.toggleClass("show");
+		showingCard = !showingCard;
+		dealingCards.push(card);
+	}
+}
+
+function hideCard(card) {
+	dealingCards.forEach(function(card) {
+		card.toggleClass("open");
+		card.toggleClass("show");
+	});
+    dealingCards = [];
+}
+
+function matchedCard(card) {
+
+
+}
+
+
+function displayAndMatch(card) {
+	displayCard(card)
+
+	//also check here if game is finshed
+	if (dealingCards[0].children().attr("class")===dealingCards[1].children().attr("class")) {
+
+	}
+	else {
+		setTimeout(hideCard, 700);
+	}
+}
+
+
+$( ".card" ).click(function() {
+
+	//Display only if card is not being displayed and is not matched
+	if (!$(this).hasClass("open") || $(this).hasClass("match")) {
+
+		//If a card is already being shown then display both and check if they match and if they match then check if game done
+		if(showingCard) {
+			displayAndMatch( $(this) )
+
+		}
+
+		else {
+			displayCard( $(this) )
+
+		}
+	}
+});
+
+$(updateCards);
