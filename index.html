@@ -5,7 +5,7 @@
     <title>Matching Game</title>
     <meta name="description" content="">
     <script src='http://127.0.0.1:9001/js/socket.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='js/jquery-3.3.1.js'></script>
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
@@ -25,63 +25,70 @@
         	</ul>
 
         	<span class="moves">0</span> Moves
-
+			<span class="timer">0</span> <span class="timer-unit">Seconds</span>
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
         </section>
 
-        <ul class="deck">
-            <li class="card">
-                <i class="fa fa-diamond"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-paper-plane-o"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-anchor"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bolt"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-cube"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-anchor"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-leaf"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bicycle"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-diamond"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bomb"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-leaf"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bomb"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bolt"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bicycle"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-paper-plane-o"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-cube"></i>
-            </li>
-        </ul>
-    </div>
+		<div class="game-box">
+			<div class="win-dialog">
+				<h1 id="win-title">YOU WON!</h1>	
+				<h2 id="win-info">You did it in <span id="win-time">22</span> seconds and got <span id="win-stars">3</span> stars!</h2>
+				<button id="win-repeat"><i class="fa fa-repeat">  Replay</i></button>
+			</div>
+			<ul class="deck">
+				<li class="card">
+					<i class="fa fa-diamond"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-paper-plane-o"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-anchor"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bolt"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-cube"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-anchor"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-leaf"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bicycle"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-diamond"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bomb"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-leaf"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bomb"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bolt"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-bicycle"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-paper-plane-o"></i>
+				</li>
+				<li class="card">
+					<i class="fa fa-cube"></i>
+				</li>
+			</ul>
+		</div>
+	</div>>
 
     <script src="js/app.js"></script>
 </body>

@@ -107,3 +107,43 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+
+.score-panel .timer {
+	margin-left: 50px;
+}
+
+.win-dialog {
+	
+	z-index: 2;
+	margin-top: 90px;
+	padding-left: 150px;
+	position: absolute;
+}
+
+#win-title {
+	font-size: 500%;
+}
+#win-info {
+}
+
+#win-repeat {
+
+	margin-left: 110px;
+	font-size: 160%;
+}
+
+/* Style buttons */
+#win-repeat {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 20px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+#win-repeat:hover {
+    background-color: RoyalBlue;
+}
