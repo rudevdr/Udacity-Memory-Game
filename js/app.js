@@ -1,20 +1,25 @@
-/*
- * Create a list that holds all of your cards
- */
+//This varaible will be shuffled
 var deck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
-function init(){
-	cardsArrange();
-
-let timerRunning = false;
-timeInSeconds = 0;
-var dealingCards = []
+//Initials variables and their values
+let timerRunning = false;		//whether timer is running
+enableClicking = true;			//clicking on deck is disabled when congratulation popup is running
+showingCard = false;
+var dealingCards = [];			//stores all cards after shuffling
+matchedCard = 0;
+stars = 3;
+movesNeededToWin = 8;
 numOfMoves = 0;
-}
+timeInSeconds = 0;
+twoStar = 14;					//how many moves required to get 2 star rating
+threeStar = 20;					//how many moves required to get 3 star rating
 
+//the congratulation popup will be hidden by default
+document.querySelector(".win-dialog").style.visibility = "hidden";
+document.querySelector(".deck").style.opacity = "1";
 
+//shuffles the deck and assigns each card with randomn item in the deck
 function cardsArrange() {
-
 	deck = shuffle(deck);
 	var index = 0;
 	$.each($(".card i"), function(){
@@ -23,14 +28,7 @@ function cardsArrange() {
 	});
 };
 
-document.querySelector(".win-dialog").style.visibility = "hidden";
-document.querySelector(".deck").style.opacity = "1";
-
-enableClicking = true;
-showingCard = false;
-matchedCard = 0;
-stars = 3;
-
+//sets and starts the timer
 function timerManage() {
 	if (timerRunning) {
 		//To Update Moves Counter
@@ -43,14 +41,7 @@ function timerManage() {
 		$(".timer").text(timeInSeconds);
 
 	}
-}
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+};
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,45 +56,37 @@ function shuffle(array) {
 	}
 
 	return array;
-}
+};
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
+//open a closed card
 function displayCard(card) {
 	if (!card.hasClass("open")) {
 		card.toggleClass("open");
 		card.toggleClass("show");
 		dealingCards.push(card);
 	}
-}
+};
 
+//open a closed card and match with last card which is still opened
 function displayAndMatch(card) {
-	displayCard(card)
+	displayCard(card);
 	showingCard = false;
 	moveAndRating();
-	//
+
 	//also check here if game is finshed
 	if (dealingCards[0].children().attr("class") === dealingCards[1].children().attr("class")) {
 		matchedCard++;
 		dealingCards = [];
+
+		//each time checking if won
+		checkWon();
 	}
 	else {
 		setTimeout(notMatchedCard, 600);
 	}
+};
 
-	checkWon();
-}
-
+//runs when restart is clicked in homepage or congratulation popup
 var onRestart = function() {
 	//Resetting the timer
 	timerRunning = false;
@@ -123,22 +106,23 @@ var onRestart = function() {
 		$(this).removeClass("open");
 		$(this).removeClass("show");
 	});
-	dealingCards = []
+	dealingCards = [];
 
 	//Making matched cards 0
-	matchedCard = 0
+	matchedCard = 0;
 
 	enableClicking = true;
 	document.querySelector(".win-dialog").style.visibility = "hidden";
 	document.querySelector(".deck").style.opacity = "1";
 
-	document.querySelector(".timer").style.display = "inline"
-	document.querySelector(".timer-unit").style.display = "inline"
+	document.querySelector(".timer").style.display = "inline";
+	document.querySelector(".timer-unit").style.display = "inline";
 
 	//Shuffling the cards on Reset
 	cardsArrange();
-}
+};
 
+//when cards don't open, this function is called
 function notMatchedCard(card) {
 	dealingCards.forEach(function(card) {
 		card.toggleClass("open");
@@ -146,8 +130,9 @@ function notMatchedCard(card) {
 	});
 
 	dealingCards = [];
-}
+};
 
+//manages moves counter and rating counter
 function moveAndRating() {
 
 	//To Update Moves Counter
@@ -155,47 +140,14 @@ function moveAndRating() {
 	$(".moves").text(numOfMoves);
 
 	//To Update Rating Counter
-	if (numOfMoves === 14 || numOfMoves === 20 ) {
+	if (numOfMoves === twoStar || numOfMoves === threeStar ) {
 		let stars = $(".fa-star");
 		$(stars[stars.length-1]).toggleClass("fa-star fa-star-o");
 	}
-}
-
-
-
-function checkWon() {
-	if (matchedCard === 1){
-		timerRunning = false;
-
-		document.querySelector(".win-dialog").style.visibility = "inherit";
-		enableClicking = false;
-		document.querySelector(".deck").style.opacity = "0.2";
-
-		$("#win-time").text(timeInSeconds);
-
-		if (numOfMoves <= 14) {
-			star = "3"
-		}
-		else if (numOfMoves <= 20 ) {
-			star = "2"
-		}
-		else {
-			star = "1"
-		}
-
-		$("#win-stars").text(star);
-
-		$("#win-repeat").click(onRestart);
-
-		document.querySelector(".timer").style.display = "none"
-		document.querySelector(".timer-unit").style.display = "none"
-	}
 };
 
-
-
-
-var onClick = function() {
+//is called when a card in the deck is clicked
+function cardClick() {
 	if (enableClicking){
 		//Display only if card is not being displayed and is not matched
 		if (!$(this).hasClass("open") || $(this).hasClass("match")) {
@@ -210,14 +162,52 @@ var onClick = function() {
 			}
 		}
 		if (!timerRunning) {
+			//on first click start the timer
 			timerRunning = true;
 			setTimeout(timerManage, 1000);
 		}
-
 	}
 };
 
-$(".card").click(onClick);
-$(".restart").click(onRestart);
+//runs everytime matching function is run
+function checkWon() {
 
-$(init);
+	if (matchedCard === movesNeededToWin ) {
+		//stopping the timer
+		timerRunning = false;
+
+		//showing congratulation popup dialog on winning
+		document.querySelector(".win-dialog").style.visibility = "inherit";
+		enableClicking = false;
+		//fading the deck
+		document.querySelector(".deck").style.opacity = "0.2";
+
+		//final time taken
+		$("#win-time").text(timeInSeconds);
+
+		//rating
+		if (numOfMoves <= twoStar) {
+			star = "3";
+		}
+		else if (numOfMoves <= threeStar) {
+			star = "2";
+		}
+		else {
+			star = "1";
+		}
+		$("#win-stars").text(star);
+
+		//repeat button
+		$("#win-repeat").click(onRestart);
+
+		//hides timer
+		document.querySelector(".timer").style.display = "none";
+		document.querySelector(".timer-unit").style.display = "none";
+	}
+};
+
+
+$(".card").click(cardClick); //on clicking of card
+$(".restart").click(onRestart); //on clicking restart button
+
+$(cardsArrange);
