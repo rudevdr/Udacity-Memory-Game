@@ -6,7 +6,7 @@ This game was inspired from a Udacity project for frontend track.
 
 If you want to see the code or play the game offline, download the repo and open the `index.html` file in your browser to see the website in action or 
 
-***Click here for [LIVE DEMO](https://rudevdr.github.io/udacity_memory_game/index.html).*** 
+***You can see the [LIVE DEMO](https://rudevdr.github.io/udacity_memory_game/index.html).*** 
 
 
 # Tools used to create this website
